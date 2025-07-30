@@ -8,6 +8,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,45 +36,44 @@ class InventoryServiceTest {
     @InjectMocks private InventoryService invService;
 
     private Item item;
+    private Inventory inventory;
 
     @BeforeEach
     void setup() {
-        item = new Item(10L, "Test", 20);
+        item = new Item(10L, "Test", new Double(10000));
+        inventory = new Inventory(10L, item, InventoryType.T, 10, LocalDateTime.now());
     }
 
     @Test
     void saveInv_topUp_shouldIncreaseStockAndSaveInv() {
-        Inventory invReq = new Inventory(null, item, InventoryType.T, 5, null);
         when(itemRepo.findById(10L)).thenReturn(Optional.of(item));
         when(itemRepo.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(invRepo.save(invReq)).thenReturn(invReq);
+        when(invRepo.save(inventory)).thenReturn(inventory);
 
-        Inventory saved = invService.saveInv(invReq);
+        Inventory saved = invService.saveInv(inventory);
 
-        assertEquals(25, item.getStock());
-        assertSame(invReq, saved);
+        assertEquals(25, inventory.getQuantity());
+        assertSame(inventory, saved);
         verify(itemRepo).save(item);
-        verify(invRepo).save(invReq);
+        verify(invRepo).save(inventory);
     }
 
     @Test
     void saveInv_withdrawal_shouldDecreaseStock() {
-        Inventory invReq = new Inventory(null, item, InventoryType.W, 8, null);
         when(itemRepo.findById(10L)).thenReturn(Optional.of(item));
         when(itemRepo.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(invRepo.save(invReq)).thenReturn(invReq);
+        when(invRepo.save(inventory)).thenReturn(inventory);
 
-        invService.saveInv(invReq);
-        assertEquals(12, item.getStock());
+        invService.saveInv(inventory);
+        assertEquals(12, inventory.getQuantity());
     }
 
     @Test
     void saveInv_itemNotFound_shouldThrow() {
-        Inventory invReq = new Inventory(null, new Item(99L, null, null), InventoryType.T, 1, null);
         when(itemRepo.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () ->
-            invService.saveInv(invReq)
+            invService.saveInv(inventory)
         );
     }
 
@@ -86,7 +86,7 @@ class InventoryServiceTest {
 
     @Test
     void listInv_shouldReturnPage() {
-        List<Inventory> list = List.of(new Inventory(1L, item, InventoryType.T, 3, null));
+        List<Inventory> list = List.of(inventory);
         when(invRepo.findAll(PageRequest.of(1, 2)))
             .thenReturn(new PageImpl<>(list));
 

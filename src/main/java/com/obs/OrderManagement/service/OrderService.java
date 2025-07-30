@@ -1,5 +1,6 @@
 package com.obs.OrderManagement.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.obs.OrderManagement.exceptions.InsufficientStockException;
 import com.obs.OrderManagement.exceptions.ResourceNotFoundException;
-import com.obs.OrderManagement.models.Item;
+import com.obs.OrderManagement.models.Inventory;
 import com.obs.OrderManagement.models.Order;
-import com.obs.OrderManagement.repository.ItemRepository;
+import com.obs.OrderManagement.repository.InventoryRepository;
 import com.obs.OrderManagement.repository.OrderRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,22 +24,28 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepo;
     @Autowired
-    private ItemRepository itemRepo;
+    private InventoryRepository inventoryRepository;
 
     @Transactional
     public Order saveOrder(Order order) {
-        Item item = itemRepo.findById(order.getItem().getId())
+        Inventory inventory = inventoryRepository.findByItemId(order.getItem().getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Item dengan id=" + order.getItem().getId() + " tidak ditemukan"));
 
-        if (item.getStock() < order.getQuantity()) {
+        if (inventory.getQuantity() < order.getQuantity()) {
+            log.error("Insufficient stock!");
             throw new InsufficientStockException(
-                    item.getId(), order.getQuantity(), item.getStock());
+                    inventory.getId(), order.getQuantity(), inventory.getQuantity());
         }
 
-        item.setStock(item.getStock() - order.getQuantity());
-        itemRepo.save(item);
-        log.info("Success save item with id : {}", item.getId());
+        inventory.setQuantity(inventory.getQuantity() - order.getQuantity());
+        inventoryRepository.save(inventory);
+        log.info("Success save item with id : {}", inventory.getId());
+        Double totalPrice = order.getQuantity() * inventory.getItem().getPrice();
+        log.info("total price : {}", totalPrice);
+        order.setPrice(totalPrice);
+        order.setOrderNo("O-"+System.currentTimeMillis());
+        order.setOrderDate(LocalDateTime.now());
         return orderRepo.save(order);
     }
 

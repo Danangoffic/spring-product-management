@@ -29,8 +29,8 @@ class ItemServiceTest {
 
     @Test
     void createItem_shouldSaveAndReturn() {
-        Item in = new Item(null, "A", 5);
-        Item saved = new Item(1L, "A", 5);
+        Item in = new Item(null, "A", new Double(5000));
+        Item saved = new Item(1L, "A", new Double(5000));
         when(itemRepo.save(in)).thenReturn(saved);
 
         Item result = itemService.saveItem(in);
@@ -41,24 +41,24 @@ class ItemServiceTest {
 
     @Test
     void getItem_found_shouldReturn() {
-        Item i = new Item(1L, "X", 10);
+        Item i = new Item(1L, "X", new Double(10000));
         when(itemRepo.findById(1L)).thenReturn(Optional.of(i));
 
-        Optional<Item> opt = itemService.getItem(1L);
-        assertTrue(opt.isPresent());
-        assertEquals("X", opt.get().getName());
+        Item opt = itemService.getItem(1L);
+        assertTrue(opt != null);
+        assertEquals("X", opt.getName());
     }
 
     @Test
     void getItem_notFound_shouldReturnEmpty() {
-        when(itemRepo.findById(2L)).thenReturn(Optional.empty());
-        assertTrue(itemService.getItem(2L).isEmpty());
+        when(itemRepo.findById(2L)).thenReturn(null);
+        assertTrue(itemService.getItem(2L) == null);
     }
 
     @Test
     void updateItem_existing_shouldSave() {
-        Item update = new Item(null, "B", 7);
-        Item merged = new Item(3L, "B", 7);
+        Item update = new Item(null, "B", new Double(7000));
+        Item merged = new Item(3L, "B", new Double(7000));
         when(itemRepo.save(argThat(i -> i.getId().equals(3L)))).thenReturn(merged);
 
         Item result = itemService.updateItem(3L, update);
@@ -75,7 +75,7 @@ class ItemServiceTest {
 
     @Test
     void listItems_shouldReturnPageContent() {
-        List<Item> data = List.of(new Item(5L, "Z", 2));
+        List<Item> data = List.of(new Item(5L, "Z", new Double(20000)));
         when(itemRepo.findAll(PageRequest.of(0, 5)))
             .thenReturn(new PageImpl<>(data));
 

@@ -19,6 +19,7 @@ import com.obs.OrderManagement.dto.OrderRequest;
 import com.obs.OrderManagement.exceptions.ResourceNotFoundException;
 import com.obs.OrderManagement.models.Item;
 import com.obs.OrderManagement.models.Order;
+import com.obs.OrderManagement.service.ItemService;
 import com.obs.OrderManagement.service.OrderService;
 
 import jakarta.validation.Valid;
@@ -28,6 +29,8 @@ import jakarta.validation.Valid;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<List<Order>>> listOrders(
@@ -48,7 +51,8 @@ public class OrderController {
     public ResponseEntity<ApiResponse<Order>> createOrder(
             @Valid @RequestBody OrderRequest req) {
         Order o = new Order();
-        o.setItem(new Item(req.getItemId(), null, null));
+        Item item = itemService.getItem(req.getItemId());
+        o.setItem(item);
         o.setQuantity(req.getQuantity());
         Order saved = orderService.saveOrder(o);
         return ResponseEntity

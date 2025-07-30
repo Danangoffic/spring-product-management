@@ -44,8 +44,7 @@ public class ItemController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Item>> getItem(@PathVariable Long id) {
         log.info("get item with id {}", id);
-        Item item = itemService.getItem(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Item dengan id=" + id + " tidak ditemukan"));
+        Item item = itemService.getItem(id);
         log.info("item got with data {}", item);
         return ResponseEntity.ok(ApiResponse.success(item));
     }
@@ -56,7 +55,7 @@ public class ItemController {
         log.info("create item with data {}", req);
         Item toSave = new Item();
         toSave.setName(req.getName());
-        toSave.setStock(req.getStock());
+        toSave.setPrice(req.getPrice());
         Item saved = itemService.saveItem(toSave);
         log.info("item successfully created with data {}", saved);
         return ResponseEntity
@@ -71,7 +70,7 @@ public class ItemController {
         log.info("update item with id {} and data {}", id, req);
         Item toUpdate = new Item();
         toUpdate.setName(req.getName());
-        toUpdate.setStock(req.getStock());
+        toUpdate.setPrice(req.getPrice());
         Item updated = itemService.updateItem(id, toUpdate);
         log.info("item successfully updated with data {}", updated);
         return ResponseEntity.ok(ApiResponse.success(updated));

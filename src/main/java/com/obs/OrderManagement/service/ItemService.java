@@ -1,12 +1,12 @@
 package com.obs.OrderManagement.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.obs.OrderManagement.exceptions.ResourceNotFoundException;
 import com.obs.OrderManagement.models.Item;
 import com.obs.OrderManagement.repository.ItemRepository;
 
@@ -22,8 +22,8 @@ public class ItemService {
         return itemRepo.findAll(PageRequest.of(page, size)).getContent();
     }
 
-    public Optional<Item> getItem(Long id) {
-        return itemRepo.findById(id);
+    public Item getItem(Long id) {
+        return itemRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Item not found"));
     }
 
     public Item saveItem(Item i) {

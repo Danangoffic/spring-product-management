@@ -18,6 +18,7 @@ import com.obs.OrderManagement.dto.InventoryRequest;
 import com.obs.OrderManagement.models.Inventory;
 import com.obs.OrderManagement.models.Item;
 import com.obs.OrderManagement.service.InventoryService;
+import com.obs.OrderManagement.service.ItemService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryController {
     @Autowired
     private InventoryService inventoryService;
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/")
     public ResponseEntity<ApiResponse<List<Inventory>>> listInventories(
@@ -41,7 +44,7 @@ public class InventoryController {
     public ResponseEntity<ApiResponse<Inventory>> addInventory(
             @Valid @RequestBody InventoryRequest req) {
         Inventory inv = new Inventory();
-        inv.setItem(new Item(req.getItemId(), null, null));
+        inv.setItem(itemService.getItem(req.getItemId()));
         inv.setType(req.getType());
         inv.setQuantity(req.getQuantity());
         Inventory saved = inventoryService.saveInv(inv);

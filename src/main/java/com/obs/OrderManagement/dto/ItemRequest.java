@@ -17,5 +17,5 @@ public class ItemRequest {
 
     @NotNull(message = "Stock awal wajib diisi")
     @Min(value = 0, message = "Stock tidak boleh negatif")
-    private Integer stock;
+    private Double price;
 }

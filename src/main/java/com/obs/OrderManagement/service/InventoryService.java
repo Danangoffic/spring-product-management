@@ -1,5 +1,6 @@
 package com.obs.OrderManagement.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,8 +35,9 @@ public class InventoryService {
         Item item = itemRepository.findById(inv.getItem().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found"));
         int delta = inv.getType() == InventoryType.T ? inv.getQuantity() : -inv.getQuantity();
-        item.setStock(item.getStock() + delta);
+        item.setPrice(item.getPrice() + delta);
         itemRepository.save(item);
+        inv.setTimestamp(LocalDateTime.now());
         return inventoryRepository.save(inv);
     }
 

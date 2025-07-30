@@ -66,64 +66,7 @@
 									}
 								],
 								"url": {
-									"raw": "localhost:8080/api/item/",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"item",
-										""
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 30 Jul 2025 15:54:42 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Pulpen\",\n            \"stock\": 10\n        }\n    ]\n}"
-						},
-						{
-							"name": "success pagination",
-							"originalRequest": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "localhost:8080/api/item/?page=2&size=5",
+									"raw": "localhost:8080/api/item/?page=0&size=200",
 									"host": [
 										"localhost"
 									],
@@ -136,11 +79,11 @@
 									"query": [
 										{
 											"key": "page",
-											"value": "2"
+											"value": "0"
 										},
 										{
 											"key": "size",
-											"value": "5"
+											"value": "200"
 										}
 									]
 								}
@@ -159,7 +102,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 30 Jul 2025 16:22:17 GMT"
+									"value": "Wed, 30 Jul 2025 17:44:46 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -171,7 +114,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": 11,\n            \"name\": \"Cheese\",\n            \"stock\": 50\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Chips\",\n            \"stock\": 246\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Hat\",\n            \"stock\": 578\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Pizza\",\n            \"stock\": 646\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Keyboard\",\n            \"stock\": 223\n        }\n    ]\n}"
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Pants\",\n            \"price\": 748.1\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Shirt\",\n            \"price\": 757.65\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Bacon\",\n            \"price\": 738.6\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Table\",\n            \"price\": 129.99\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Computer\",\n            \"price\": 754.76\n        },\n        {\n            \"id\": 6,\n            \"name\": \"Computer\",\n            \"price\": 904.98\n        },\n        {\n            \"id\": 7,\n            \"name\": \"Sausages\",\n            \"price\": 223.52\n        },\n        {\n            \"id\": 8,\n            \"name\": \"Keyboard\",\n            \"price\": 702.59\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Ball\",\n            \"price\": 632.57\n        },\n        {\n            \"id\": 10,\n            \"name\": \"Gloves\",\n            \"price\": 991.48\n        },\n        {\n            \"id\": 11,\n            \"name\": \"Hat\",\n            \"price\": 364.01\n        },\n        {\n            \"id\": 12,\n            \"name\": \"Chicken\",\n            \"price\": 797.68\n        },\n        {\n            \"id\": 13,\n            \"name\": \"Ball\",\n            \"price\": 243.42\n        },\n        {\n            \"id\": 14,\n            \"name\": \"Towels\",\n            \"price\": 314.82\n        },\n        {\n            \"id\": 15,\n            \"name\": \"Shirt\",\n            \"price\": 853.91\n        },\n        {\n            \"id\": 16,\n            \"name\": \"Bike\",\n            \"price\": 645.6\n        },\n        {\n            \"id\": 17,\n            \"name\": \"Computer\",\n            \"price\": 868.44\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Chips\",\n            \"price\": 859.57\n        },\n        {\n            \"id\": 19,\n            \"name\": \"Towels\",\n            \"price\": 74.55\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Bacon\",\n            \"price\": 413.31\n        },\n        {\n            \"id\": 21,\n            \"name\": \"Pants\",\n            \"price\": 865.58\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Car\",\n            \"price\": 584.85\n        },\n        {\n            \"id\": 23,\n            \"name\": \"Car\",\n            \"price\": 80.47\n        },\n        {\n            \"id\": 24,\n            \"name\": \"Sausages\",\n            \"price\": 707.04\n        },\n        {\n            \"id\": 25,\n            \"name\": \"Ball\",\n            \"price\": 273.06\n        }\n    ]\n}"
 						}
 					]
 				},
@@ -193,7 +136,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProduct}}\",\n    \"stock\": {{$randomInt}}\n}",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"price\": {{$randomPrice}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,7 +175,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Pulpen\",\n    \"stock\": 10\n}",
+									"raw": "{\n    \"name\": \"{{$randomProduct}}\",\n    \"price\": {{$randomPrice}}\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -266,7 +209,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 30 Jul 2025 15:54:37 GMT"
+									"value": "Wed, 30 Jul 2025 17:44:44 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -278,7 +221,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pulpen\",\n        \"stock\": 10\n    }\n}"
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 25,\n        \"name\": \"Ball\",\n        \"price\": 273.06\n    }\n}"
 						}
 					]
 				},
@@ -300,7 +243,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"stock\": {{$randomInt}}\n}",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"price\": {{$randomPrice}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -308,7 +251,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/item/24",
+							"raw": "localhost:8080/api/item/10",
 							"host": [
 								"localhost"
 							],
@@ -316,13 +259,13 @@
 							"path": [
 								"api",
 								"item",
-								"24"
+								"10"
 							]
 						}
 					},
 					"response": [
 						{
-							"name": "success",
+							"name": "create item Copy",
 							"originalRequest": {
 								"method": "PUT",
 								"header": [
@@ -339,7 +282,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Pena\",\n    \"stock\": 10\n}",
+									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"price\": {{$randomPrice}}\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -347,7 +290,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/api/item/1",
+									"raw": "localhost:8080/api/item/10",
 									"host": [
 										"localhost"
 									],
@@ -355,13 +298,13 @@
 									"path": [
 										"api",
 										"item",
-										"1"
+										"10"
 									]
 								}
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -373,7 +316,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 30 Jul 2025 15:55:51 GMT"
+									"value": "Wed, 30 Jul 2025 17:46:04 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -385,73 +328,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pena\",\n        \"stock\": 10\n    }\n}"
-						},
-						{
-							"name": "success 2",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"stock\": {{$randomInt}}\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/api/item/24",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"api",
-										"item",
-										"24"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": null,
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "application/json"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Date",
-									"value": "Wed, 30 Jul 2025 16:24:58 GMT"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=60"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 24,\n        \"name\": \"Licensed Cotton Car\",\n        \"stock\": 238\n    }\n}"
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 10,\n        \"name\": \"Awesome Plastic Pants\",\n        \"price\": 359.84\n    }\n}"
 						}
 					]
 				},
@@ -481,7 +358,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/item/3",
+							"raw": "localhost:8080/api/item/15",
 							"host": [
 								"localhost"
 							],
@@ -489,7 +366,7 @@
 							"path": [
 								"api",
 								"item",
-								"3"
+								"15"
 							]
 						}
 					},
@@ -579,7 +456,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:8080/api/item/1",
+							"raw": "localhost:8080/api/item/17",
 							"host": [
 								"localhost"
 							],
@@ -587,7 +464,7 @@
 							"path": [
 								"api",
 								"item",
-								"1"
+								"17"
 							]
 						}
 					},
@@ -648,6 +525,63 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Pulpen\",\n        \"stock\": 10\n    }\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/api/item/17",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"item",
+										"17"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Jul 2025 17:46:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 17,\n        \"name\": \"Computer\",\n        \"price\": 868.44\n    }\n}"
 						}
 					]
 				}
@@ -662,7 +596,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/inventories/",
+							"raw": "http://localhost:8080/api/inventories/?page&size=100",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -672,6 +606,16 @@
 								"api",
 								"inventories",
 								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": null
+								},
+								{
+									"key": "size",
+									"value": "100"
+								}
 							]
 						}
 					},
@@ -732,7 +676,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"itemId\": 1,\n    \"type\": \"T\",\n    \"quantity\": 20\n}",
+							"raw": "{\n    \"itemId\": 5,\n    \"type\": \"T\",\n    \"quantity\": {{$randomInt}}\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -827,7 +771,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/inventories/3",
+							"raw": "http://localhost:8080/api/inventories/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -836,7 +780,7 @@
 							"path": [
 								"api",
 								"inventories",
-								"3"
+								"9"
 							]
 						}
 					},
@@ -930,7 +874,59 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/orders/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"orders",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 30 Jul 2025 18:25:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"orderNo\": \"O-1753899953942\",\n            \"item\": {\n                \"id\": 5,\n                \"name\": \"Cotton\",\n                \"price\": 284.28999999999996\n            },\n            \"quantity\": 5,\n            \"price\": 1421.4499999999998,\n            \"orderDate\": \"2025-07-31 01:25:53\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "create orders",
@@ -939,7 +935,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"itemId\": 1,\n    \"quantity\": 3\n}",
+							"raw": "{\n    \"itemId\": 2,\n    \"quantity\": 20\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -968,7 +964,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"itemId\": 2,\n    \"quantity\": 2\n}",
+									"raw": "{\n    \"itemId\": 5,\n    \"quantity\": 5\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1003,7 +999,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 30 Jul 2025 16:57:48 GMT"
+									"value": "Wed, 30 Jul 2025 18:25:53 GMT"
 								},
 								{
 									"key": "Keep-Alive",
@@ -1015,7 +1011,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 1,\n        \"item\": {\n            \"id\": 2,\n            \"name\": null,\n            \"stock\": null\n        },\n        \"quantity\": 2,\n        \"orderDate\": \"2025-07-30T23:57:48.693398\"\n    }\n}"
+							"body": "{\n    \"code\": \"00\",\n    \"message\": \"success\",\n    \"data\": {\n        \"id\": 1,\n        \"orderNo\": \"O-1753899953942\",\n        \"item\": {\n            \"id\": 5,\n            \"name\": \"Cotton\",\n            \"price\": 284.28999999999996\n        },\n        \"quantity\": 5,\n        \"price\": 1421.4499999999998,\n        \"orderDate\": \"2025-07-31 01:25:53\"\n    }\n}"
 						}
 					]
 				},
