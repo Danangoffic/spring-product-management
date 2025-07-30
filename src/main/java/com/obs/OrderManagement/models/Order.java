@@ -35,7 +35,7 @@ public class Order {
     @Column(unique = true,nullable = false, updatable = false)
     private String orderNo;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 

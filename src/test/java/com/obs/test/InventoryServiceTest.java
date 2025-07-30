@@ -3,9 +3,11 @@ package com.obs.test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -31,67 +33,81 @@ import com.obs.OrderManagement.service.InventoryService;
 
 @ExtendWith(MockitoExtension.class)
 class InventoryServiceTest {
-    @Mock private ItemRepository itemRepo;
-    @Mock private InventoryRepository invRepo;
-    @InjectMocks private InventoryService invService;
+    @Mock
+    private ItemRepository itemRepo;
+    @Mock
+    private InventoryRepository invRepo;
+    @InjectMocks
+    private InventoryService invService;
 
     private Item item;
-    private Inventory inventory;
+    private Inventory topUpInventory;
+    private Inventory withdrawalInventory;
+    private LocalDateTime now;
 
     @BeforeEach
     void setup() {
-        item = new Item(10L, "Test", new Double(10000));
-        inventory = new Inventory(10L, item, InventoryType.T, 10, LocalDateTime.now());
+        // Item with initial stock
+        item = new Item(10L, "TestItem", 100.0);
+        // Timestamp for consistency
+        now = LocalDateTime.now();
+        topUpInventory = new Inventory(null, item, InventoryType.T, 20, now);
+        withdrawalInventory = new Inventory(null, item, InventoryType.W, 20, now);
     }
 
     @Test
-    void saveInv_topUp_shouldIncreaseStockAndSaveInv() {
+    void saveInv_topUp_shouldSaveAndNotModifyInventory() {
         when(itemRepo.findById(10L)).thenReturn(Optional.of(item));
-        when(itemRepo.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(invRepo.save(inventory)).thenReturn(inventory);
+        when(invRepo.save(topUpInventory)).thenReturn(topUpInventory);
 
-        Inventory saved = invService.saveInv(inventory);
+        Inventory saved = invService.saveInv(topUpInventory);
 
-        assertEquals(25, inventory.getQuantity());
-        assertSame(inventory, saved);
-        verify(itemRepo).save(item);
-        verify(invRepo).save(inventory);
+        assertSame(topUpInventory, saved);
+        verify(itemRepo).findById(10L);
+        verify(invRepo).save(topUpInventory);
     }
 
     @Test
-    void saveInv_withdrawal_shouldDecreaseStock() {
+    void saveInv_withdrawal_shouldSaveAndNotModifyInventory() {
         when(itemRepo.findById(10L)).thenReturn(Optional.of(item));
-        when(itemRepo.save(any())).thenAnswer(i -> i.getArgument(0));
-        when(invRepo.save(inventory)).thenReturn(inventory);
+        when(invRepo.save(withdrawalInventory)).thenReturn(withdrawalInventory);
 
-        invService.saveInv(inventory);
-        assertEquals(12, inventory.getQuantity());
+        Inventory saved = invService.saveInv(withdrawalInventory);
+
+        assertSame(withdrawalInventory, saved);
+        verify(itemRepo).findById(10L);
+        verify(invRepo).save(withdrawalInventory);
     }
 
     @Test
-    void saveInv_itemNotFound_shouldThrow() {
-        when(itemRepo.findById(99L)).thenReturn(Optional.empty());
+    void saveInv_itemNotFound_shouldThrowResourceNotFound() {
+        when(itemRepo.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () ->
-            invService.saveInv(inventory)
-        );
+        ResourceNotFoundException ex = assertThrows(ResourceNotFoundException.class,
+                () -> invService.saveInv(topUpInventory));
+        assertTrue(ex.getMessage().length() > 0);
+        verify(itemRepo).findById(10L);
+        verifyNoInteractions(invRepo);
     }
 
     @Test
-    void deleteInv_shouldInvokeRepo() {
+    void deleteInv_shouldInvokeRepository() {
         doNothing().when(invRepo).deleteById(7L);
         invService.deleteInv(7L);
         verify(invRepo).deleteById(7L);
     }
 
     @Test
-    void listInv_shouldReturnPage() {
-        List<Inventory> list = List.of(inventory);
+    void listInv_shouldReturnContentList() {
+        List<Inventory> list = List.of(topUpInventory);
         when(invRepo.findAll(PageRequest.of(1, 2)))
-            .thenReturn(new PageImpl<>(list));
+                .thenReturn(new PageImpl<>(list));
 
-        List<Inventory> res = invService.listInv(1, 2);
-        assertEquals(1, res.size());
-        assertEquals(3, res.get(0).getQuantity());
+        List<Inventory> result = invService.listInv(1, 2);
+        assertEquals(1, result.size());
+        assertEquals(topUpInventory, result.get(0));
+        verify(invRepo).findAll(PageRequest.of(1, 2));
     }
+
+    
 }

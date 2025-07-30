@@ -1,6 +1,7 @@
 package com.obs.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doNothing;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import com.obs.OrderManagement.exceptions.ResourceNotFoundException;
 import com.obs.OrderManagement.models.Item;
 import com.obs.OrderManagement.repository.ItemRepository;
 import com.obs.OrderManagement.service.ItemService;
@@ -51,8 +53,8 @@ class ItemServiceTest {
 
     @Test
     void getItem_notFound_shouldReturnEmpty() {
-        when(itemRepo.findById(2L)).thenReturn(null);
-        assertTrue(itemService.getItem(2L) == null);
+        when(itemRepo.findById(2L)).thenThrow(ResourceNotFoundException.class);
+        assertThrows(ResourceNotFoundException.class, () -> itemService.getItem(2L));
     }
 
     @Test

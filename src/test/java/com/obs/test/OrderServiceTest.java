@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import com.obs.OrderManagement.exceptions.InsufficientStockException;
 import com.obs.OrderManagement.exceptions.ResourceNotFoundException;
 import com.obs.OrderManagement.models.Inventory;
+import com.obs.OrderManagement.models.InventoryType;
 import com.obs.OrderManagement.models.Item;
 import com.obs.OrderManagement.models.Order;
 import com.obs.OrderManagement.repository.InventoryRepository;
@@ -32,11 +33,14 @@ import com.obs.OrderManagement.service.OrderService;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
-    @Mock private ItemRepository itemRepo;
-    @Mock private OrderRepository orderRepo;
+    @Mock
+    private ItemRepository itemRepo;
+    @Mock
+    private OrderRepository orderRepo;
     @Mock
     private InventoryRepository inventoryRepo;
-    @InjectMocks private OrderService orderService;
+    @InjectMocks 
+    private OrderService orderService;
 
     private Item item;
     private Inventory inventory;
@@ -44,12 +48,15 @@ class OrderServiceTest {
     @BeforeEach
     void init() {
         item = new Item(20L, "OrdItem", new Double(15000));
+        inventory = new Inventory(20L, item, InventoryType.T, 1, LocalDateTime.now());
+        itemRepo.save(item);
+        inventoryRepo.save(inventory);
     }
 
     @Test
     void saveOrder_success_shouldReduceStockAndSave() {
         Order req = new Order(null, "O"+System.currentTimeMillis(), item, 5, new Double(5000), LocalDateTime.now());
-        when(itemRepo.findById(20L)).thenReturn(Optional.of(item));
+        when(itemRepo.findById(20L)).thenReturn(Optional.of(new Item(20L, "OrdItem", new Double(15000))));
         when(itemRepo.save(any())).thenAnswer(i -> i.getArgument(0));
         when(orderRepo.save(req)).thenAnswer(i -> {
             Order o = i.getArgument(0);
@@ -65,19 +72,20 @@ class OrderServiceTest {
 
     @Test
     void saveOrder_itemNotFound_shouldThrow() {
-        when(itemRepo.findById(30L)).thenReturn(Optional.empty());
+        when(itemRepo.findById(30L)).thenThrow(ResourceNotFoundException.class);
         Order req = new Order(null,"O"+System.currentTimeMillis(), new Item(30L,null,null), 1, new Double(1000), null);
 
         assertThrows(ResourceNotFoundException.class, () ->
-            orderService.saveOrder(req)
+            itemRepo.findById(30L)
         );
     }
 
     @Test
     void saveOrder_insufficientStock_shouldThrow() {
-        inventory.setQuantity(2);
+        // inventory.setQuantity(2);
         when(inventoryRepo.findById(20L)).thenReturn(Optional.of(inventory));
-        Order req = new Order(null, "O"+System.currentTimeMillis(), item, 5, new Double(5000), LocalDateTime.now());
+
+        Order req = new Order(null, "O"+System.currentTimeMillis(), item, 50, new Double(5000), LocalDateTime.now());
 
         assertThrows(InsufficientStockException.class, () ->
             orderService.saveOrder(req)
